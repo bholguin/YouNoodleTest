@@ -12,7 +12,8 @@ After forking or duplicating the repository, follow these steps to set up the pr
 1. Navigate to the project's root directory
 1. Make sure you are using Node >= 18
 2. Install the dependencies: `npm install`
-3. Start the development server: `npm start`
+3. Install the dependencies: `npm run install`
+4. Start the development server: `npm start`
 
 # husky
 
