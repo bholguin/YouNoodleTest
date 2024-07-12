@@ -14,12 +14,12 @@ After forking or duplicating the repository, follow these steps to set up the pr
 2. Install the dependencies: `npm install`
 3. Start the development server: `npm start`
 
-## husky
+# husky
 
 We use [husky hooks](https://typicode.github.io/husky/#/) to install git hooks. 
 It helps to check/fix code styles before commit.
 
-# Install hooks
+## Install hooks
 Run `npm run install` command to install husky hooks.
 
 It will install pre-commit hook to check code styles before commit your code.
