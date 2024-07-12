@@ -9,12 +9,12 @@ import {
 } from '@mui/material'
 import React from 'react'
 
-type CustomCheckboxProps = CheckboxProps & {
+export type CustomCheckboxProps = CheckboxProps & {
     id: string
     label?: string
 }
 
-type CheckboxGroupProps = Partial<{
+export type CheckboxGroupProps = Partial<{
     id: string
     label: string
     helperText: string
@@ -59,6 +59,7 @@ export const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
                                     <Checkbox
                                         {...option}
                                         id={checkboxId}
+                                        checked={option.checked}
                                         onChange={internalOnChange}
                                         color={error ? 'error' : 'primary'}
                                     />

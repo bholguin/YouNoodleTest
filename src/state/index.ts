@@ -1,22 +1,25 @@
 import { StateCreator, create } from 'zustand'
-import { devtools } from 'zustand/middleware'
+import { devtools, persist, createJSONStorage } from 'zustand/middleware'
 
-import { DomainAnswers } from '../domain/types'
+import { CustomCheckboxProps } from '../components/CheckboxGroup'
+import { DomainAnswers, InterestsOptions } from '../domain/types'
 
-type AnswersStoreProperties = DomainAnswers
+export type AnswersStoreProperties = DomainAnswers & InterestsOptions
 
 type AnswersStoreActions = {
     setAnswers: (answers: DomainAnswers) => void
-    getAnswers: () => DomainAnswers
+    getAnswers: () => AnswersStoreProperties
+    setInterestOptions: (options: Array<CustomCheckboxProps>) => void
 }
 
 export type AnswersStore = AnswersStoreProperties & AnswersStoreActions
 
-const initialState: AnswersStoreProperties = {
+export const initialState: AnswersStoreProperties = {
     name: '',
     mail: '',
     age: '',
     interests: [],
+    interestOptions: [],
 }
 
 const createStore: StateCreator<AnswersStore> = (set, get) => ({
@@ -27,7 +30,35 @@ const createStore: StateCreator<AnswersStore> = (set, get) => ({
         name: get().name,
         mail: get().mail,
         interests: get().interests,
+        interestOptions: [
+            ...get().interests.map(item => {
+                const option = Object.entries(item).map(([k, v]) => ({
+                    id: k,
+                    label: v.label,
+                    checked: v.isChecked,
+                }))[0]
+                return option
+            }),
+        ],
     }),
+    setInterestOptions: options =>
+        set(state => ({
+            ...state,
+            //interestOptions: options,
+            interests: options.map(item => ({
+                [item.id]: {
+                    isChecked: !!item.checked,
+                    label: item.label as string,
+                },
+            })),
+        })),
 })
 
-export const useAnswersStore = create(devtools(createStore))
+export const useAnswersStore = create(
+    devtools(
+        persist(createStore, {
+            name: 'answers',
+            storage: createJSONStorage(() => sessionStorage),
+        }),
+    ),
+)
