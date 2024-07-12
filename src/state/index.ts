@@ -44,7 +44,6 @@ const createStore: StateCreator<AnswersStore> = (set, get) => ({
     setInterestOptions: options =>
         set(state => ({
             ...state,
-            //interestOptions: options,
             interests: options.map(item => ({
                 [item.id]: {
                     isChecked: !!item.checked,

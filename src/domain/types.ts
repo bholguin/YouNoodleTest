@@ -10,7 +10,11 @@ export type DomainOption = {
 export type DomainAnswerValue = string | Array<DomainOption>
 
 export type InterestsOptions = {
-    interestOptions?: Array<CustomCheckboxProps>
+    interestOptions?: Array<{
+        id: string
+        label?: string
+        checked: boolean
+    }>
 }
 
 export type DomainAnswers = {
