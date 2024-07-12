@@ -14,6 +14,7 @@ import {
 import React, { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { useResetAnswers } from '../api-hooks/useResetAnswers'
 import { APP_ROUTES } from '../domain/routes'
 import { useAnswersStore } from '../state'
 
@@ -32,14 +33,18 @@ import { useAnswersStore } from '../state'
 // - See useResetAnswers hook for more guidelines.
 
 export const TableView = () => {
+    const resetAnswersMutation = useResetAnswers()
     const answers = useAnswersStore(state => state.getAnswers())
-    const interestOptions = answers.interestOptions
 
     const navigate = useNavigate()
 
     const goToForm = useCallback(() => {
         navigate(APP_ROUTES.FORM)
     }, [navigate])
+
+    const resetAnswers = useCallback(() => {
+        resetAnswersMutation.mutate()
+    }, [resetAnswersMutation])
 
     return (
         <TableContainer
@@ -72,7 +77,9 @@ export const TableView = () => {
                         {' '}
                         <EditIcon />
                     </span>
-                    <DeleteIcon />
+                    <span onClick={resetAnswers}>
+                        <DeleteIcon />
+                    </span>
                 </div>
             </section>
             <Table
@@ -87,14 +94,16 @@ export const TableView = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {interestOptions?.map(item => (
+                    {answers.interestOptions?.map(item => (
                         <TableRow key={item.id}>
                             <TableCell align="center">{item.label}</TableCell>
                             <TableCell align="center">
                                 {item.checked ? (
-                                    <CheckCircleIcon />
+                                    <CheckCircleIcon
+                                        style={{ color: 'green' }}
+                                    />
                                 ) : (
-                                    <CancelIcon />
+                                    <CancelIcon style={{ color: 'red' }} />
                                 )}
                             </TableCell>
                         </TableRow>
