@@ -11,8 +11,10 @@ import {
     TableHead,
     TableRow,
 } from '@mui/material'
-import React from 'react'
+import React, { useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 
+import { APP_ROUTES } from '../domain/routes'
 import { useAnswersStore } from '../state'
 
 // TASK 4:
@@ -32,6 +34,12 @@ import { useAnswersStore } from '../state'
 export const TableView = () => {
     const answers = useAnswersStore(state => state.getAnswers())
     const interestOptions = answers.interestOptions
+
+    const navigate = useNavigate()
+
+    const goToForm = useCallback(() => {
+        navigate(APP_ROUTES.FORM)
+    }, [navigate])
 
     return (
         <TableContainer
@@ -60,7 +68,10 @@ export const TableView = () => {
                     <span>{answers.mail}</span>
                 </div>
                 <div>
-                    <EditIcon />
+                    <span onClick={goToForm}>
+                        {' '}
+                        <EditIcon />
+                    </span>
                     <DeleteIcon />
                 </div>
             </section>
