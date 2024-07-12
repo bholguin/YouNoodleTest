@@ -3,6 +3,7 @@ import { devtools, persist, createJSONStorage } from 'zustand/middleware'
 
 import { CustomCheckboxProps } from '../components/CheckboxGroup'
 import { DomainAnswers, InterestsOptions } from '../domain/types'
+import { buildInterestOptions } from '../domain/utils'
 
 export type AnswersStoreProperties = DomainAnswers & InterestsOptions
 
@@ -44,12 +45,7 @@ const createStore: StateCreator<AnswersStore> = (set, get) => ({
     setInterestOptions: options =>
         set(state => ({
             ...state,
-            interests: options.map(item => ({
-                [item.id]: {
-                    isChecked: !!item.checked,
-                    label: item.label as string,
-                },
-            })),
+            interests: buildInterestOptions(options),
         })),
 })
 

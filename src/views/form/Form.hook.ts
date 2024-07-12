@@ -1,11 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useUpdateAnswers } from '../../api-hooks/useUpdateAnswers'
+import { CustomCheckboxProps } from '../../components'
+import { buildInterestOptions } from '../../domain/utils'
 import { useAnswersStore } from '../../state'
 
 import { validationSchema } from './Form.config'
 
 export const useCustomForm = () => {
+    const updateAnswersMutation = useUpdateAnswers()
     const answers = useAnswersStore(state => state.getAnswers())
     const interestOptions = answers.interestOptions
 
@@ -22,16 +26,15 @@ export const useCustomForm = () => {
         resolver: yupResolver(validationSchema),
     })
 
-    //const updateAnswersMutation = useUpdateAnswers()
-
     const onSubmit = handleSubmit(formData => {
-        console.log(formData)
-        /* updateAnswersMutation.mutate({
+        updateAnswersMutation.mutate({
             name: formData.name,
             mail: formData.mail,
             age: formData.age,
-            interests: [],
-        }) */
+            interests: buildInterestOptions(
+                formData.interests as Array<CustomCheckboxProps>,
+            ),
+        })
     })
 
     return {

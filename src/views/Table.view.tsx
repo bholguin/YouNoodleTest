@@ -1,4 +1,19 @@
+import CancelIcon from '@mui/icons-material/Cancel'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
+import {
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+} from '@mui/material'
 import React from 'react'
+
+import { useAnswersStore } from '../state'
 
 // TASK 4:
 // - Implement the table from this mockup (public/table_view_mockup.png).
@@ -14,4 +29,67 @@ import React from 'react'
 // - Invoke useResetAnswers hook on delete button click.
 // - See useResetAnswers hook for more guidelines.
 
-export const TableView = () => <div id="table-view"></div>
+export const TableView = () => {
+    const answers = useAnswersStore(state => state.getAnswers())
+    const interestOptions = answers.interestOptions
+
+    return (
+        <TableContainer
+            component={Paper}
+            style={{
+                width: '100%',
+                margin: '1rem',
+            }}
+        >
+            <section
+                style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    padding: '1rem',
+                }}
+            >
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '.5rem',
+                    }}
+                >
+                    <span>{answers.name}</span>
+                    <span>{answers.age}</span>
+                    <span>{answers.mail}</span>
+                </div>
+                <div>
+                    <EditIcon />
+                    <DeleteIcon />
+                </div>
+            </section>
+            <Table
+                style={{
+                    width: '100%',
+                }}
+            >
+                <TableHead>
+                    <TableRow>
+                        <TableCell align="center">Questions</TableCell>
+                        <TableCell align="center">Answers</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {interestOptions?.map(item => (
+                        <TableRow key={item.id}>
+                            <TableCell align="center">{item.label}</TableCell>
+                            <TableCell align="center">
+                                {item.checked ? (
+                                    <CheckCircleIcon />
+                                ) : (
+                                    <CancelIcon />
+                                )}
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    )
+}

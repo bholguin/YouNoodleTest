@@ -1,8 +1,7 @@
 import { Box, Button } from '@mui/material'
 import React, { FC } from 'react'
 
-import { CheckboxGroupForm } from '../../components/CheckboxGroupForm'
-import { TestFieldForm } from '../../components/TextFieldForm'
+import { CheckboxGroupForm, TestFieldForm } from '../../components'
 
 import { useCustomForm } from './Form.hook'
 

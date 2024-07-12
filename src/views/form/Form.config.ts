@@ -54,6 +54,10 @@ export const validationSchema = object().shape({
                 checked: boolean(),
             }),
         )
-        .compact(v => !v.checked) // remove all false options
-        .min(1, HAS_SELECT_ANY),
+        .required(HAS_SELECT_ANY)
+        .test(
+            'hasSelected',
+            HAS_SELECT_ANY,
+            value => !!value.find(item => item.checked),
+        ),
 })

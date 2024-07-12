@@ -1,5 +1,3 @@
-import { CustomCheckboxProps } from '../components/CheckboxGroup'
-
 export type DomainOption = {
     [key: number]: {
         isChecked: boolean
@@ -9,12 +7,14 @@ export type DomainOption = {
 
 export type DomainAnswerValue = string | Array<DomainOption>
 
+export type InterestsOption = {
+    id: string
+    label?: string
+    checked: boolean
+}
+
 export type InterestsOptions = {
-    interestOptions?: Array<{
-        id: string
-        label?: string
-        checked: boolean
-    }>
+    interestOptions?: Array<InterestsOption>
 }
 
 export type DomainAnswers = {
