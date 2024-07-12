@@ -56,6 +56,7 @@ export const FormView: FC = () => {
                 <CheckboxGroupForm
                     name="interests"
                     id="interests"
+                    label="Interests"
                     control={control}
                     defaultValue={interestOptions}
                     options={interestOptions}
