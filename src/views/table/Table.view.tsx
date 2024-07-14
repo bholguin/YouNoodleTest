@@ -1,22 +1,21 @@
-import CancelIcon from '@mui/icons-material/Cancel'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import {
     Paper,
-    Table,
     TableBody,
     TableCell,
     TableContainer,
     TableHead,
     TableRow,
 } from '@mui/material'
-import { useCallback } from 'react'
+import { FC, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useResetAnswers } from '../api-hooks/useResetAnswers'
-import { APP_ROUTES } from '../domain/routes'
-import { useAnswersStore } from '../state'
+import { useResetAnswers } from '../../api-hooks/useResetAnswers'
+import { APP_ROUTES } from '../../domain/routes'
+import { useAnswersStore } from '../../state'
+
+import { Styled } from './Table.styles'
 
 // TASK 4:
 // - Implement the table from this mockup (public/table_view_mockup.png).
@@ -32,7 +31,7 @@ import { useAnswersStore } from '../state'
 // - Invoke useResetAnswers hook on delete button click.
 // - See useResetAnswers hook for more guidelines.
 
-export const TableView = () => {
+export const TableView: FC = () => {
     const resetAnswersMutation = useResetAnswers()
     const answers = useAnswersStore(state => state.getAnswers())
 
@@ -47,46 +46,32 @@ export const TableView = () => {
     }, [resetAnswersMutation])
 
     return (
-        <TableContainer
-            component={Paper}
-            style={{
-                width: '100%',
-                margin: '1rem',
-            }}
-        >
-            <section
-                style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    padding: '1rem',
-                }}
-            >
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '.5rem',
-                    }}
-                >
-                    <span>{answers.name}</span>
-                    <span>{answers.age}</span>
-                    <span>{answers.mail}</span>
-                </div>
-                <div>
-                    <span onClick={goToForm}>
-                        {' '}
+        <TableContainer component={Paper}>
+            <Styled.InfoContent>
+                <Styled.UserInfoContent>
+                    <Styled.ActionContent>
+                        <span>Name:</span>
+                        <span>{answers.name}</span>
+                    </Styled.ActionContent>
+                    <Styled.ActionContent>
+                        <span>Age:</span>
+                        <span>{answers.age}</span>
+                    </Styled.ActionContent>
+                    <Styled.ActionContent>
+                        <span>Mail:</span>
+                        <span>{answers.mail}</span>
+                    </Styled.ActionContent>
+                </Styled.UserInfoContent>
+                <Styled.ActionContent>
+                    <Styled.ActionIconWaraper onClick={goToForm}>
                         <EditIcon />
-                    </span>
-                    <span onClick={resetAnswers}>
+                    </Styled.ActionIconWaraper>
+                    <Styled.ActionIconWaraper onClick={resetAnswers}>
                         <DeleteIcon />
-                    </span>
-                </div>
-            </section>
-            <Table
-                style={{
-                    width: '100%',
-                }}
-            >
+                    </Styled.ActionIconWaraper>
+                </Styled.ActionContent>
+            </Styled.InfoContent>
+            <Styled.TableStyled>
                 <TableHead>
                     <TableRow>
                         <TableCell align="center">Questions</TableCell>
@@ -99,17 +84,15 @@ export const TableView = () => {
                             <TableCell align="center">{item.label}</TableCell>
                             <TableCell align="center">
                                 {item.checked ? (
-                                    <CheckCircleIcon
-                                        style={{ color: 'green' }}
-                                    />
+                                    <Styled.CheckCircleIconStyled />
                                 ) : (
-                                    <CancelIcon style={{ color: 'red' }} />
+                                    <Styled.CancelIconStyled />
                                 )}
                             </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
-            </Table>
+            </Styled.TableStyled>
         </TableContainer>
     )
 }

@@ -16,34 +16,33 @@ export const FormView: FC = () => {
     } = useCustomForm()
 
     return (
-        <div id="form-view">
-            <Box
-                display="flex"
-                gap={4}
-                sx={{ flexDirection: 'column', width: '300px' }}
-            >
-                <TestFieldForm
-                    control={control}
-                    name="name"
-                    defaultValue={answers.name}
-                    label="Name"
-                    variant="standard"
-                />
-                <TestFieldForm
-                    control={control}
-                    name="age"
-                    defaultValue={answers.age}
-                    label="Age"
-                    variant="standard"
-                />
-                <TestFieldForm
-                    control={control}
-                    name="mail"
-                    defaultValue={answers.mail}
-                    label="E-Mail"
-                    variant="standard"
-                />
-                {/*
+        <Box
+            display="flex"
+            gap={4}
+            sx={{ flexDirection: 'column', width: '300px' }}
+        >
+            <TestFieldForm
+                control={control}
+                name="name"
+                defaultValue={answers.name}
+                label="Name"
+                variant="standard"
+            />
+            <TestFieldForm
+                control={control}
+                name="age"
+                defaultValue={answers.age}
+                label="Age"
+                variant="standard"
+            />
+            <TestFieldForm
+                control={control}
+                name="mail"
+                defaultValue={answers.mail}
+                label="E-Mail"
+                variant="standard"
+            />
+            {/*
                     TASK 2:
                     - Integrate CheckboxGroup into the form, controlled
                     by react-hook-form.
@@ -53,23 +52,18 @@ export const FormView: FC = () => {
                     CheckboxGroup's options. This could be detrimental
                     to your final assessment.
                 */}
-                <CheckboxGroupForm
-                    name="interests"
-                    id="interests"
-                    label="Interests"
-                    control={control}
-                    defaultValue={interestOptions}
-                    options={interestOptions}
-                    onChange={setInterestsOptions}
-                />
-                <Button
-                    variant="contained"
-                    disabled={!isValid}
-                    onClick={onSubmit}
-                >
-                    Submit
-                </Button>
-            </Box>
-        </div>
+            <CheckboxGroupForm
+                name="interests"
+                id="interests"
+                label="Interests"
+                control={control}
+                defaultValue={interestOptions}
+                options={interestOptions}
+                onChange={setInterestsOptions}
+            />
+            <Button variant="contained" disabled={!isValid} onClick={onSubmit}>
+                Submit
+            </Button>
+        </Box>
     )
 }

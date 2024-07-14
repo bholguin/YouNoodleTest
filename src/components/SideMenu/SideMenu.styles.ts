@@ -56,6 +56,7 @@ export namespace Styled {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        padding: theme.spacing(2),
     }))
 
     export const LinkStyled = styled(Link, {
