@@ -58,13 +58,39 @@ export namespace Styled {
         alignItems: 'center',
     }))
 
-    export const LinkStyled = styled(Link)(({ theme }) => ({
-        display: 'block',
-        marginTop: theme.spacing(1.5),
-        color: theme.palette.common.white,
-        textDecoration: 'none',
-        textAlign: 'center',
-        width: '100%',
-        backgroundColor: 'transparent',
-    }))
+    export const LinkStyled = styled(Link, {
+        shouldForwardProp: props => props !== 'active',
+    })<{ active: boolean }>(({ theme, active }) =>
+        active
+            ? {
+                  display: 'block',
+                  marginTop: theme.spacing(0.5),
+                  textDecoration: 'none',
+                  textAlign: 'center',
+                  width: '50%',
+                  color: theme.palette.primary.main,
+                  backgroundColor: theme.palette.common.white,
+                  fontWeight: 'bold',
+                  borderRadius: theme.spacing(0.5),
+                  padding: theme.spacing(0.4),
+                  [theme.breakpoints.up('md')]: {
+                      marginTop: theme.spacing(1.5),
+                      width: '100%',
+                  },
+              }
+            : {
+                  display: 'block',
+                  marginTop: theme.spacing(0.5),
+                  textDecoration: 'none',
+                  textAlign: 'center',
+                  width: '50%',
+                  color: theme.palette.common.white,
+                  backgroundColor: 'transparent',
+                  padding: theme.spacing(0.4),
+                  [theme.breakpoints.up('md')]: {
+                      marginTop: theme.spacing(1.5),
+                      width: '100%',
+                  },
+              },
+    )
 }
