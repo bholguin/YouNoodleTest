@@ -9,7 +9,7 @@ import {
     RegisterOptions,
 } from 'react-hook-form'
 
-import CheckboxGroup, { CheckboxGroupProps } from './CheckboxGroup'
+import { CheckboxGroup, CheckboxGroupProps } from './CheckboxGroup'
 
 type Props<T extends FieldValues> = CheckboxGroupProps & {
     name: FieldPath<T>

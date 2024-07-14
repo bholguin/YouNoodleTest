@@ -1,5 +1,4 @@
 import {
-    Box,
     Checkbox,
     FormControlLabel,
     InputLabel,
@@ -7,7 +6,9 @@ import {
     FormHelperText,
     FormControl,
 } from '@mui/material'
-import { FC } from 'react'
+import { ChangeEvent, FC } from 'react'
+
+import { Styled } from './CheckboxGroup.styles'
 
 export type CustomCheckboxProps = CheckboxProps & {
     id: string
@@ -23,6 +24,7 @@ export type CheckboxGroupProps = Partial<{
     onChange: (options: Array<CustomCheckboxProps>) => void
 }>
 
+//prefere don't export by defaut for call it by correct name in other side
 export const CheckboxGroup: FC<CheckboxGroupProps> = ({
     id,
     label,
@@ -31,7 +33,7 @@ export const CheckboxGroup: FC<CheckboxGroupProps> = ({
     options = [],
     onChange = () => null,
 }) => {
-    const internalOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const internalOnChange = (event: ChangeEvent<HTMLInputElement>) => {
         const changedOptions = options.map(option =>
             option.id === event.target.id
                 ? { ...option, checked: event.target.checked }
@@ -43,12 +45,12 @@ export const CheckboxGroup: FC<CheckboxGroupProps> = ({
     const checkboxGroupId = id ?? ''
 
     return (
-        <div id={checkboxGroupId} className="checkbox-group">
+        <div id={checkboxGroupId}>
             <InputLabel id={checkboxGroupId} error={error}>
                 {label}
             </InputLabel>
             <FormControl error={error}>
-                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Styled.BoxStyled>
                     {options.map(option => {
                         const checkboxId = option.id || ''
                         return (
@@ -67,11 +69,9 @@ export const CheckboxGroup: FC<CheckboxGroupProps> = ({
                             />
                         )
                     })}
-                </Box>
+                </Styled.BoxStyled>
                 <FormHelperText>{helperText}</FormHelperText>
             </FormControl>
         </div>
     )
 }
-
-export default CheckboxGroup
