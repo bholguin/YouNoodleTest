@@ -20,10 +20,17 @@ import { PaletteOptions } from '@mui/material'
 export const palette: PaletteOptions = {
     mode: 'light',
     background: {
-        default: '#D8E1EB',
+        default: '#FFFFFF',
     },
     text: {
         primary: '#18243E',
+    },
+    common: {
+        black: '#18243E',
+        white: '#FFFFFF',
+    },
+    primary: {
+        main: '#DD1E3E',
     },
     //Example to cumtom colors follow up style guide
     /* primary: {
@@ -73,6 +80,5 @@ export const palette: PaletteOptions = {
         '200': '#D0D3D8',
         '100': '#E7E8EB',
         '50': '#f3f3f5',
-
     }, */
 }

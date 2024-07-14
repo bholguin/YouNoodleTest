@@ -26,6 +26,7 @@
         "import"
     ],
     "rules": {
+        "@typescript-eslint/no-namespace": "off", //enable namespace for create scope to styles
         "@typescript-eslint/no-unused-vars": [
             "error",
             {
