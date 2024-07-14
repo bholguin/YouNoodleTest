@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { AppRoutes } from '../../domain/routes'
@@ -10,7 +10,7 @@ type SideMenuProps = {
     children?: React.ReactNode
 }
 
-export const SideMenu: React.FC<SideMenuProps> = ({ children, routes }) => {
+export const SideMenu: FC<SideMenuProps> = ({ children, routes }) => {
     const navigate = useNavigate()
 
     React.useEffect(() => {

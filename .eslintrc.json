@@ -26,6 +26,7 @@
         "import"
     ],
     "rules": {
+        "react/react-in-jsx-scope": "off", // prefer do not import all react library over jsx/tsx files
         "@typescript-eslint/no-namespace": "off", //enable namespace for create scope to styles
         "@typescript-eslint/no-unused-vars": [
             "error",

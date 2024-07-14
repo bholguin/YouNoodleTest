@@ -7,7 +7,7 @@ import {
     FormHelperText,
     FormControl,
 } from '@mui/material'
-import React from 'react'
+import { FC } from 'react'
 
 export type CustomCheckboxProps = CheckboxProps & {
     id: string
@@ -23,7 +23,7 @@ export type CheckboxGroupProps = Partial<{
     onChange: (options: Array<CustomCheckboxProps>) => void
 }>
 
-export const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
+export const CheckboxGroup: FC<CheckboxGroupProps> = ({
     id,
     label,
     helperText,
