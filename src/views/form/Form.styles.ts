@@ -5,6 +5,6 @@ export namespace Styled {
         display: 'flex',
         flexDirection: 'column',
         width: '400px',
-        gap: theme.spacing(4),
+        gap: theme.spacing(3),
     }))
 }

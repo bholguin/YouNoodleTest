@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useEffect } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 
+import { useGetAnswers } from '../../api-hooks/useGetAnswers'
 import { useUpdateAnswers } from '../../api-hooks/useUpdateAnswers'
 import { CustomCheckboxProps } from '../../components'
 import { buildInterestOptions, getInterestList } from '../../domain/utils'
@@ -10,8 +11,10 @@ import { useAnswersStore } from '../../state'
 import { validationSchema } from './Form.config'
 
 export const useCustomForm = () => {
+    const getAnswers = useGetAnswers()
+
     const updateAnswersMutation = useUpdateAnswers()
-    const answers = useAnswersStore(state => state.getAnswers())
+    const answers = useAnswersStore()
 
     const {
         control,
@@ -56,7 +59,7 @@ export const useCustomForm = () => {
 
     useEffect(() => {
         replace(getInterestList(answers.interests))
-    }, [answers.interests, replace, getInterestList])
+    }, [answers.interests, replace])
 
     return {
         control,
@@ -65,6 +68,7 @@ export const useCustomForm = () => {
         answers,
         onSubmit,
         trigger,
+        getAnswers,
         updateAnswersMutation,
     }
 }

@@ -2,7 +2,7 @@ import { styled } from '@mui/material'
 
 export namespace Styled {
     export const PreloadStyled = styled('div')({
-        width: '110%',
+        width: '150%',
         height: '110vh',
         display: 'flex',
         justifyContent: 'center',

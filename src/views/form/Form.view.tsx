@@ -15,11 +15,17 @@ export const FormView: FC = () => {
         fields,
         trigger,
         answers,
+        getAnswers,
         updateAnswersMutation,
     } = useCustomForm()
+
     return (
         <>
-            <Preloader isLoading={updateAnswersMutation.isLoading} />
+            <Preloader
+                isLoading={
+                    getAnswers.isFetching || updateAnswersMutation.isLoading
+                }
+            />
             <Styled.FormStyled onSubmit={onSubmit}>
                 <TestFieldForm
                     control={control}
