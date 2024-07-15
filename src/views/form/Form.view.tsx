@@ -1,44 +1,31 @@
-import { Box, Button } from '@mui/material'
+import { Button } from '@mui/material'
 import { FC } from 'react'
 
-import { CheckboxGroupForm, TestFieldForm } from '../../components'
+import { CheckboxGroup, TestFieldForm } from '../../components'
 
 import { useCustomForm } from './Form.hook'
+import { Styled } from './Form.styles'
 
 export const FormView: FC = () => {
-    const {
-        control,
-        answers,
-        interestOptions,
-        isValid,
-        onSubmit,
-        setInterestsOptions,
-    } = useCustomForm()
-
+    const { control, onSubmit, isValid, fields, trigger, answers } =
+        useCustomForm()
     return (
-        <Box
-            display="flex"
-            gap={4}
-            sx={{ flexDirection: 'column', width: '300px' }}
-        >
+        <Styled.FormStyled onSubmit={onSubmit}>
             <TestFieldForm
                 control={control}
                 name="name"
-                defaultValue={answers.name}
                 label="Name"
                 variant="standard"
             />
             <TestFieldForm
                 control={control}
                 name="age"
-                defaultValue={answers.age}
                 label="Age"
                 variant="standard"
             />
             <TestFieldForm
                 control={control}
                 name="mail"
-                defaultValue={answers.mail}
                 label="E-Mail"
                 variant="standard"
             />
@@ -52,18 +39,17 @@ export const FormView: FC = () => {
                     CheckboxGroup's options. This could be detrimental
                     to your final assessment.
                 */}
-            <CheckboxGroupForm
+            <CheckboxGroup
+                control={control}
                 name="interests"
                 id="interests"
                 label="Interests"
-                control={control}
-                defaultValue={interestOptions}
-                options={interestOptions}
-                onChange={setInterestsOptions}
+                options={fields}
+                trigger={trigger}
             />
-            <Button variant="contained" disabled={!isValid} onClick={onSubmit}>
-                Submit
+            <Button variant="contained" type="submit" disabled={!isValid}>
+                {answers.name ? 'Edit' : 'Submit'}
             </Button>
-        </Box>
+        </Styled.FormStyled>
     )
 }

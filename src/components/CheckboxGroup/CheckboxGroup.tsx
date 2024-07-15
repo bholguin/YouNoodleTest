@@ -3,10 +3,19 @@ import {
     FormControlLabel,
     InputLabel,
     CheckboxProps,
-    FormHelperText,
     FormControl,
+    FormHelperText,
 } from '@mui/material'
-import { ChangeEvent, FC } from 'react'
+import {
+    Control,
+    Controller,
+    FieldPath,
+    FieldValues,
+    Path,
+    PathValue,
+    RegisterOptions,
+    UseFormTrigger,
+} from 'react-hook-form'
 
 import { Styled } from './CheckboxGroup.styles'
 
@@ -24,53 +33,57 @@ export type CheckboxGroupProps = Partial<{
     onChange: (options: Array<CustomCheckboxProps>) => void
 }>
 
+type Props<T extends FieldValues> = CheckboxGroupProps & {
+    name: FieldPath<T>
+    control: Control<T>
+    rules?: RegisterOptions<T>
+    defaultValue?: PathValue<T, Path<T>>
+    trigger?: UseFormTrigger<T>
+}
+
 //prefere don't export by defaut for call it by correct name in other side
-export const CheckboxGroup: FC<CheckboxGroupProps> = ({
-    id,
-    label,
-    helperText,
-    error,
-    options = [],
-    onChange = () => null,
-}) => {
-    const internalOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const changedOptions = options.map(option =>
-            option.id === event.target.id
-                ? { ...option, checked: event.target.checked }
-                : option,
-        )
-        onChange(changedOptions)
-    }
-
+export function CheckboxGroup<T extends FieldValues>(props: Props<T>) {
+    const { id, control, rules, label, options, name, trigger } = props
     const checkboxGroupId = id ?? ''
-
+    const fieldState = control.getFieldState(name)
     return (
         <div id={checkboxGroupId}>
-            <InputLabel id={checkboxGroupId} error={error}>
+            <InputLabel id={checkboxGroupId} error={!!fieldState.error}>
                 {label}
             </InputLabel>
-            <FormControl error={error}>
+            <FormControl error={!!fieldState.error}>
                 <Styled.BoxStyled>
-                    {options.map(option => {
-                        const checkboxId = option.id || ''
-                        return (
-                            <FormControlLabel
-                                key={checkboxId}
-                                label={option.label}
-                                control={
-                                    <Checkbox
-                                        {...option}
-                                        id={checkboxId}
-                                        checked={option.checked}
-                                        onChange={internalOnChange}
-                                        color={error ? 'error' : 'primary'}
-                                    />
-                                }
-                            />
-                        )
-                    })}
+                    {options?.map((option, index) => (
+                        <Controller
+                            key={option.id}
+                            name={`${name}.${index}.checked` as FieldPath<T>}
+                            control={control}
+                            rules={rules}
+                            shouldUnregister
+                            render={({ field: { onChange, value, ref } }) => (
+                                <FormControlLabel
+                                    label={option.label}
+                                    ref={ref}
+                                    control={
+                                        <Checkbox
+                                            checked={value}
+                                            onChange={event => {
+                                                onChange(event)
+                                                trigger && trigger([name])
+                                            }}
+                                            color={
+                                                fieldState.error
+                                                    ? 'error'
+                                                    : 'primary'
+                                            }
+                                        />
+                                    }
+                                />
+                            )}
+                        />
+                    ))}
                 </Styled.BoxStyled>
-                <FormHelperText>{helperText}</FormHelperText>
+                <FormHelperText>{fieldState.error?.message}</FormHelperText>
             </FormControl>
         </div>
     )

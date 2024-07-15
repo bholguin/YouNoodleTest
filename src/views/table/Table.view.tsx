@@ -1,6 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import {
+    Button,
     Paper,
     TableBody,
     TableCell,
@@ -13,6 +14,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useResetAnswers } from '../../api-hooks/useResetAnswers'
 import { APP_ROUTES } from '../../domain/routes'
+import { getInterestList } from '../../domain/utils'
 import { useAnswersStore } from '../../state'
 
 import { Styled } from './Table.styles'
@@ -45,7 +47,7 @@ export const TableView: FC = () => {
         resetAnswersMutation.mutate()
     }, [resetAnswersMutation])
 
-    return (
+    return answers.name ? (
         <TableContainer component={Paper}>
             <Styled.InfoContent>
                 <Styled.UserInfoContent>
@@ -79,7 +81,7 @@ export const TableView: FC = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {answers.interestOptions?.map(item => (
+                    {getInterestList(answers.interests)?.map(item => (
                         <TableRow key={item.id}>
                             <TableCell align="center">{item.label}</TableCell>
                             <TableCell align="center">
@@ -94,5 +96,9 @@ export const TableView: FC = () => {
                 </TableBody>
             </Styled.TableStyled>
         </TableContainer>
+    ) : (
+        <Button size="large" variant="contained" onClick={goToForm}>
+            Fill Request
+        </Button>
     )
 }
