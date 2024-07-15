@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import { useGetAnswers } from './api-hooks/useGetAnswers'
 import { SideMenu } from './components'
+import { Preloader } from './components/Preloader'
 import { APP_ROUTES } from './domain/routes'
 import { FormView, TableView } from './views'
 
@@ -11,10 +12,11 @@ const App = () => {
     // answers in the store.
     // The return of this, and the other hooks, is never used directly.
     // Everything is handled by the store.
-    useGetAnswers()
+    const operation = useGetAnswers()
 
     return (
         <div id="app">
+            <Preloader isLoading={operation.isLoading} />
             <Router>
                 <SideMenu routes={APP_ROUTES}>
                     <Routes>
