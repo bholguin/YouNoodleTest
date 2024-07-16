@@ -54,10 +54,11 @@ export const validationSchema = object().shape({
                 checked: boolean(),
             }),
         )
+        .default([])
         .required(HAS_SELECT_ANY)
         .test(
             'hasSelected',
             HAS_SELECT_ANY,
-            value => !!value.find(item => item.checked),
+            value => !!value.some(item => item.checked),
         ),
 })

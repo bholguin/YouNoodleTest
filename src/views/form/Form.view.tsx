@@ -1,7 +1,8 @@
 import { Button } from '@mui/material'
 import { FC } from 'react'
 
-import { CheckboxGroup, TestFieldForm } from '../../components'
+import { TestFieldForm } from '../../components'
+import { CheckboxGroup } from '../../components/CheckboxGroup'
 import { Preloader } from '../../components/Preloader'
 
 import { useCustomForm } from './Form.hook'
@@ -18,14 +19,11 @@ export const FormView: FC = () => {
         getAnswers,
         updateAnswersMutation,
     } = useCustomForm()
-
+    const isLoading: boolean =
+        getAnswers.isFetching || updateAnswersMutation.isLoading
     return (
         <>
-            <Preloader
-                isLoading={
-                    getAnswers.isFetching || updateAnswersMutation.isLoading
-                }
-            />
+            <Preloader isLoading={isLoading} />
             <Styled.FormStyled onSubmit={onSubmit}>
                 <TestFieldForm
                     control={control}
@@ -63,7 +61,11 @@ export const FormView: FC = () => {
                     options={fields}
                     trigger={trigger}
                 />
-                <Button variant="contained" type="submit" disabled={!isValid}>
+                <Button
+                    variant="contained"
+                    type="submit"
+                    disabled={!isValid || isLoading}
+                >
                     {answers.name ? 'Edit' : 'Submit'}
                 </Button>
             </Styled.FormStyled>
