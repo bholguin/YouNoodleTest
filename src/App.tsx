@@ -15,12 +15,12 @@ const App = () => (
 
     <div id="app">
         <Router>
-            <SideMenu routes={APP_ROUTES}>
-                <Routes>
+            <Routes>
+                <Route path="/" element={<SideMenu routes={APP_ROUTES} />}>
                     <Route path={APP_ROUTES.FORM} element={<FormView />} />
                     <Route path={APP_ROUTES.TABLE} element={<TableView />} />
-                </Routes>
-            </SideMenu>
+                </Route>
+            </Routes>
         </Router>
     </div>
 )

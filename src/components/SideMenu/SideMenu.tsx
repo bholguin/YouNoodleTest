@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 import { AppRoutes } from '../../domain/routes'
 
@@ -7,10 +7,9 @@ import { Styled } from './SideMenu.styles'
 
 type Props = {
     routes: AppRoutes
-    children?: React.ReactNode
 }
 
-export const SideMenu: FC<Props> = ({ children, routes }) => {
+export const SideMenu: FC<Props> = ({ routes }) => {
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -34,7 +33,9 @@ export const SideMenu: FC<Props> = ({ children, routes }) => {
                     Table
                 </Styled.LinkStyled>
             </Styled.BoxMenuSide>
-            <Styled.BoxContentSide>{children}</Styled.BoxContentSide>
+            <Styled.BoxContentSide>
+                <Outlet />
+            </Styled.BoxContentSide>
         </Styled.BoxContent>
     )
 }
