@@ -33,12 +33,13 @@ export function TestFieldForm<T extends FieldValues>(
             defaultValue={defaultValue}
             rules={rules}
             render={({
-                field: { onChange, value, ref },
+                field: { onChange, value, ref, name },
                 fieldState: { error },
             }) => (
                 <TextField
                     label={label}
                     ref={ref}
+                    name={name}
                     variant={variant}
                     onChange={onChange}
                     value={value}

@@ -43,7 +43,8 @@ type Props<T extends FieldValues> = CheckboxGroupProps & {
 
 //prefere don't export by defaut for call it by correct name in other side
 export function CheckboxGroup<T extends FieldValues>(props: Props<T>) {
-    const { id, control, rules, label, options, name, trigger } = props
+    const { id, control, rules, label, options, name, trigger, defaultValue } =
+        props
     const checkboxGroupId = id ?? ''
     const fieldState = control.getFieldState(name)
     return (
@@ -59,6 +60,7 @@ export function CheckboxGroup<T extends FieldValues>(props: Props<T>) {
                             name={`${name}.${index}.checked` as FieldPath<T>}
                             control={control}
                             rules={rules}
+                            defaultValue={defaultValue}
                             shouldUnregister
                             render={({ field: { onChange, value, ref } }) => (
                                 <FormControlLabel

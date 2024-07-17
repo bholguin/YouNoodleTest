@@ -12,9 +12,8 @@ import { validationSchema } from './Form.config'
 
 export const useCustomForm = () => {
     const getAnswers = useGetAnswers()
-
     const updateAnswersMutation = useUpdateAnswers()
-    const answers = useAnswersStore()
+    const answers = useAnswersStore(state => state.getAnswers())
 
     const {
         control,
@@ -29,7 +28,13 @@ export const useCustomForm = () => {
             age: '',
             mail: '',
             name: '',
-            interests: [],
+            interests: [
+                {
+                    checked: false,
+                    id: '',
+                    label: '',
+                },
+            ],
         },
     })
 
@@ -58,7 +63,9 @@ export const useCustomForm = () => {
     }, [answers.age, answers.mail, answers.name, reset])
 
     useEffect(() => {
-        replace(getInterestList(answers.interests))
+        if (answers.interests.length > 0) {
+            replace(getInterestList(answers.interests))
+        }
     }, [answers.interests, replace])
 
     return {
